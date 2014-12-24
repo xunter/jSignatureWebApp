@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+
+<div>
+    <p style="font-size: large; font-weight:bold; text-align:center">MEDIA CONSENT AND RELEASE FORM</p>
+
+    <p style="font-weight:bold">
+        THIS DOCUMENT CONTAINS A RELEASE OF RIGHTS.  DO NOT SIGN THIS DOCUMENT UNTIL YOU HAVE READ IT CAREFULLY AND UNDERSTAND IT.
+    </p>
+
+    <p>
+        This Consent and Release Form (the “Release”) is executed
+        this <span style="text-decoration:underline">#DAY_NUM#</span> day of <span style="text-decoration:underline">#MONTH_NAME#</span>, #YEAR_NUM#, by <span style="text-decoration:underline">#PARTICIPANT#</span> (“Participant”).
+    </p>
+
+    <p>
+        For and in consideration of Say-So Inc and/or its affiliates (collectively, “SAY-SO”) allowing Participant to be videotaped and/or photographed and/or recorded (each a “Video”) by SAY-SO or SAY-SO’s agent(s), Participant agrees to be bound by the following:
+    </p>
+
+    <ol>
+        <li><u>Participant is Receiving Value.</u>  Participant agrees that participating in the Video is of value to Participant, and that Participant is participating in the Video of their own free will and accord.</li>
+        <li><u>Release of Liability.</u>  Participant for themselves, their legal representatives, heirs, and assigns, agrees to release, waive, and discharge SAY-SO, its corporate affiliates, and its and their officers, board members, shareholders, employees, and agents (collectively, the “SAY-SO Releases”), from all liability and/or claims of loss or damage, whether for personal injury to Participant, damage to Participant’s property, or otherwise, arising out of or in connection with Participant participating in the Video.  Participant agrees not to bring any claims or lawsuits against SAY-SO for any injury to Participant or damage to Participant’s property which arises from Participant participating in the Video.</li>
+        <li>
+            <u>Media Rights Release.</u>  Participant understands and agrees that SAY-SO shall use the Video for general media purposes, including but not limited to, television, radio, newspaper, and/or internet advertising.  Participant agrees that any video, voice recording, still pictures, or other media content created by SAY-SO or SAY-SO ‘S agents or employees during the Video (the “Video Content”) shall be and remain the property of SAY-SO upon creation.  Participant agrees that SAY-SO shall own all right, title and interest to the Video Content (including all rights embodied therein) and that SAY-SO may edit, modify, distribute, and otherwise exploit the Video Content, without limitation, and without compensation, further permission, or notification to Participant.  Participant hereby waives any inspection or approval of use rights.  Participant also agrees to waive and release SAY-SO from any claims based upon invasion of privacy, right of publicity, defamation, or claim of visual or audio alteration or faulty mechanical reproduction.
+        </li>
+    </ol>
+
+    <p>
+        Participant agrees that this Release is intended to be as broad and inclusive as permitted by the laws of the State of California, and that if any portion of this Release is held invalid, it is agreed that the balance shall; notwithstanding, continue in full legal force and effect.
+    </p>
+
+    <p>Participant has executed this Release as of the day and year first above written.</p>
+
+    <p>By signing this Electronic Signature Acknowledgment Form, I agree that my electronic signature is the legally binding equivalent to my handwritten signature.  Whenever I execute an electronic signature, it has the same validity and meaning as my handwritten signature.  I will not, at any time in the future, repudiate the meaning of my electronic signature or claim that my electronic signature is not legally binding.</p>
+
+    <p style="font-weight:bold">
+        Agreed
+    </p>
+
+    <p>
+        
+        <div id="canvasSign"></div>
+        <br />
+        Signature of Participant
+    </p>
+
+    <p>
+        <div id="canvasPrintName"></div>
+        <br />
+        Print Name
+    </p>
+</div>
+
+@using (Html.BeginForm("Submit", "Signature"))
+{
+
+    @Html.Hidden("signPNGImageBase64")
+
+    @Html.Hidden("printNamePNGImageBase64")
+
+    <p>
+        <button id="btnSubmit">Submit</button>
+    </p>
+}
+
+
+@section scripts {
+    @Scripts.Render("~/Scripts/jSignature.js")
+    @Scripts.Render("~/Scripts/jSignature.UndoButton.js")
+
+    <script>
+        $(function () {
+
+            var $btnSubmit = $("#btnSubmit");
+            var $hfSign = $("#signPNGImageBase64");
+            var $hfPrintName = $("#printNamePNGImageBase64");
+
+            var $canvasSign = $("#canvasSign");
+            var $canvasPrintName = $("#canvasPrintName");
+
+            $canvasSign.jSignature({ width: 500, height: 100 });
+
+            $canvasPrintName.jSignature({ width: 500, height: 100 });
+            
+            $btnSubmit.closest("form").submit(function () {
+                $hfSign.val($canvasSign.jSignature('getData'));
+                $hfPrintName.val($canvasPrintName.jSignature('getData'));
+            });
+        });
+    </script>
+}
